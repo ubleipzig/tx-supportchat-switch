@@ -1,0 +1,11 @@
+.switch-icon {
+    display: block;
+    width: 10em;
+    height: 10em;
+}
+.switch-on {
+    background: url(../Icons/supportchat-switch-on.svg);
+}
+.switch-off {
+    background: url(../Icons/supportchat-switch-off.svg);
+}

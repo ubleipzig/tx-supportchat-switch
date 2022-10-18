@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="de" datatype="plaintext" original="messages" date="2022-10-14T13:20:51Z" product-name="supportchat-switch">
+        <header/>
+        <body>
+            <trans-unit id="mlang_tabs_tab" xml:space="preserve">
+                <source>Supportchat Switch</source>
+                <target>Supportchat Switch</target>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tablabel" xml:space="preserve">
+                <source>Supportchat switch module</source>
+                <target>Supportchat switch module</target>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tabdescr" xml:space="preserve">
+                <source>Backend module of supportchat switch to enable or disable frontend chat</source>
+                <target>Backend Modul zum Ein- und Ausschalten des Supportchats im Frontend</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

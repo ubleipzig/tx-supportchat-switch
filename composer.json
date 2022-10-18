@@ -1,0 +1,46 @@
+{
+  "name": "ubl/supportchat-switch",
+  "description": "Supportchat switch to enable chat at frontend for Typo3 Supportchat extension",
+  "type": "typo3-cms-extension",
+  "keywords": [
+    "TYPO3",
+    "CMS",
+    "extension",
+    "switch",
+    "chat"
+  ],
+  "homepage": "https://github.com/ubleipzig/tx-supportchat-switch",
+  "license": ["GPL-2.0+"],
+  "version": "0.0.1",
+  "support": {
+    "issues": "https://github.com/ubleipzig/tx-supportchat-switch/issues"
+  },
+  "authors": [
+    {
+      "name": "Frank Morgner",
+      "email": "frank.morgner@uni-leipzig.de",
+      "role": "Developer"
+    },
+    {
+      "name": "Leipzig University Library",
+      "email": "info@ub.uni-leipzig.de",
+      "role": "Contracting entity"                                                                                                                                                            }
+  ],
+  "repositories": [{
+    "type": "composer",
+    "url": "https://composer.typo3.org/"
+  }],
+  "require": {
+    "typo3/cms": "^8.7 || ^9.5",
+    "ubl/supportchat": "^2.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ubl\\SupportchatSwitch\\": "Classes/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Ubl\\SupportchatSwitch\\Tests\\": "Tests/"
+    }
+  }}

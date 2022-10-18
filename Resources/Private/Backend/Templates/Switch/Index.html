@@ -1,0 +1,20 @@
+<f:layout name="Default" />
+<f:section name="headline">
+    <h3><f:translate key="module.switch.title" extensionName="supportchat-switch"/></h3>
+</f:section>
+<f:section name="content">
+    <p>
+        <f:translate key="module.switch.description" extensionName="supportchat-switch"/>
+    </p>
+    <p>
+        <f:if condition="{state} == true">
+            <f:translate key="module.switch.on.message" extensionName="supportchat-switch" />
+            <div class="switch-icon switch-on"></div>
+        <f:else>&nbsp;
+            <f:translate key="module.switch.off.message" extensionName="supportchat-switch" />
+           <div class="switch-icon switch-off"></div>
+        </f:else></f:if>
+    </p>
+</f:section>
+
+

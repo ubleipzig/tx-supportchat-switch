@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2022-10-14T15:40:05Z" product-name="supportchatswitch">
+        <header/>
+        <body>
+            <trans-unit id="module.switch.title">
+                <source>Support chat switch</source>
+            </trans-unit>
+            <trans-unit id="module.switch.description">
+                <source>Enable or disable support chat on typo3 frontend</source>
+            </trans-unit>
+            <trans-unit id="module.switch.off.message">
+                <source>Supportchat is currently disabled. Press switch button to enable chat.</source>
+            </trans-unit>
+            <trans-unit id="module.switch.on.message">
+                <source>Supportchat is currently enabled. Press switch button to disable chat.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
