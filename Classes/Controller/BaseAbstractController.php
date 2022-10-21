@@ -137,6 +137,6 @@ abstract class BaseAbstractController extends ActionController
      */
     protected function translate(string $key, array $arguments = null): string
     {
-        return LocalizationUtility::translate($key, 'supportchat-stats', $arguments) ?? '';
+        return LocalizationUtility::translate($key, 'supportchat-switch', $arguments) ?? '';
     }
 }

@@ -35,7 +35,6 @@ $boot = function () {
         'tx_supportchatswitch',
         'EXT:supportchat-switch/Resources/Private/Language/locallang.xlf'
     );
-
 };
 
 $boot();

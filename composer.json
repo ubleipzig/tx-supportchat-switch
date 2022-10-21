@@ -10,7 +10,7 @@
     "chat"
   ],
   "homepage": "https://github.com/ubleipzig/tx-supportchat-switch",
-  "license": ["GPL-2.0+"],
+  "license": ["GPL-3.0+"],
   "version": "0.0.1",
   "support": {
     "issues": "https://github.com/ubleipzig/tx-supportchat-switch/issues"

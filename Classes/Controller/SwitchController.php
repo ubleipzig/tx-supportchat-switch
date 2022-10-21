@@ -37,29 +37,96 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class SwitchController extends BaseAbstractController
 {
     /**
-     * Initializes the current action
+     * Initialize action
      *
      * @return void
      * @access public
-     * @throws JsonException
      */
     public function indexAction()
     {
-        $stateJsonPath = ExtensionManagementUtility::extPath('supportchat-switch') . 'Configuration/Status/state.json';
-        try {
-            if (false === ($stateJson = file_get_contents($stateJsonPath))) {
-                $initStatusArray = ['state' => false];
-                $stateJson = file_put_contents(
-                    $stateJsonPath,
-                    json_encode($initStatusArray, JSON_THROW_ON_ERROR)
-                );
-            }
-            $status = (json_decode($stateJson, true));
-        } catch (\JsonException $ej) {
-            throw new Exception('Json has thrown an error: ' . $ej->getMessage());
+        if (false === (file_get_contents($this->getJsonPath()))) {
+            $this->saveStatusToJson(false);
         }
+        if ($this->getBackendRequestParameter('state') !== null) {
+            $this->saveStatusToJson((bool)$this->getBackendRequestParameter('state'));
+        }
+        $status = json_decode(file_get_contents($this->getJsonPath()), true);
         $this->view->assignMultiple([
-            'status' => $status['state']
+            'status' => $status['state'],
+            'translations' => json_encode([
+                'switch_on_message' =>  addslashes($this->translate("module.switch.on.message")),
+                'switch_off_message' => addslashes($this->translate("module.switch.off.message"))
+			]),
+			'frequencyOfChatRequest' => 10000 # in ms
         ]);
+    }
+
+    /**
+     * Initializes the module
+     *
+     * @param string $parameter
+     *
+     * @return mixed
+     * @access protected
+     */
+    protected function getBackendRequestParameter(string $parameter)
+    {
+        $moduleNamespace = $this->extensionNamespace . '_' . strtolower(GeneralUtility::_GET('M'));
+        return (GeneralUtility::_GP($moduleNamespace)[$parameter]) ?? GeneralUtility::_GP($moduleNamespace)[$parameter];
+    }
+
+    /**
+     * Return current state of chat as json
+     *
+     * @return string
+     * @access public
+     */
+    public function getCurrentChatStatus(): string
+    {
+        $json = file_get_contents($this->getJsonPath());
+        ob_clean();
+        header('Expires: Mon, 26 Jul 1990 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate( "D, d M Y H:i:s" ) . 'GMT');
+        header('Cache-Control: no-cache, must-revalidate');
+        header('Pragma: no-cache');
+        header('Content-Length: '.strlen($json));
+        header('Content-Type: ' . 'text/json');
+        echo $json;
+        exit();
+    }
+
+
+    /** Get defined path to json status file.
+     *
+     * @return string   Path to json status file.
+     * @access protected
+     */
+    protected function getJsonPath(): string
+    {
+        return ExtensionManagementUtility::extPath('supportchat-switch') . 'Configuration/Status/state.json';
+    }
+
+    /**
+     * Save status as json file.
+     *
+     * @param bool $status
+     *
+     * @return bool
+     * @access protected
+     * @throws JsonException
+     */
+    protected function saveStatusToJson(bool $state): bool
+    {
+        try {
+            $switchStatusArray = ['state' => $state];
+            file_put_contents(
+                $this->getJsonPath(),
+                json_encode($switchStatusArray, JSON_THROW_ON_ERROR)
+            );
+        } catch (\JsonException $e) {
+            throw new Exception('Json has thrown an error: ' . $e->getMessage());
+            return false;
+        }
+        return true;
     }
 }

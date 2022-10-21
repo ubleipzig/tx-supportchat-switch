@@ -1,8 +1,19 @@
-.switch-icon {
+.switch-btn {
     display: block;
-    width: 10em;
-    height: 10em;
+    width: 8em;
+    height: 8em;
+    margin: 0.7em 0 1em;
 }
+
+.switch-btn:hover {
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -ms-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+    opacity: 0.7;
+}
+
 .switch-on {
     background: url(../Icons/supportchat-switch-on.svg);
 }
