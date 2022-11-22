@@ -37,3 +37,7 @@ TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(
         }
     }'
 );
+
+/* Frontend Ajax call- Get current status of chat */
+$GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['supportchatswitch_status']
+    = \Ubl\SupportchatSwitch\Controller\AjaxFrontendListener::class . '::getCurrentStatus';

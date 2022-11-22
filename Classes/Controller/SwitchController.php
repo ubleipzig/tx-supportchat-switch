@@ -24,8 +24,9 @@ declare(strict_types=1);
 */
 namespace Ubl\SupportchatSwitch\Controller;
 
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Ubl\SupportchatSwitch\Helper\StatusHelper;
 
 /**
 * Class ChatsController
@@ -44,13 +45,13 @@ class SwitchController extends BaseAbstractController
      */
     public function indexAction()
     {
-        if (false === (file_get_contents($this->getJsonPath()))) {
-            $this->saveStatusToJson(false);
+        if (false === (file_get_contents(StatusHelper::getJsonPath()))) {
+            StatusHelper::saveStatusToJson(false);
         }
         if ($this->getBackendRequestParameter('state') !== null) {
-            $this->saveStatusToJson((bool)$this->getBackendRequestParameter('state'));
+            StatusHelper::saveStatusToJson((bool)$this->getBackendRequestParameter('state'));
         }
-        $status = json_decode(file_get_contents($this->getJsonPath()), true);
+        $status = json_decode(file_get_contents(StatusHelper::getJsonPath()), true);
         $this->view->assignMultiple([
             'status' => $status['state'],
             'translations' => json_encode([
@@ -78,55 +79,15 @@ class SwitchController extends BaseAbstractController
     /**
      * Return current state of chat as json
      *
-     * @return string
+     * @return ResponseInterface
      * @access public
      */
-    public function getCurrentChatStatus(): string
+    public function getCurrentChatStatus(ResponseInterface $response): ResponseInterface
     {
-        $json = file_get_contents($this->getJsonPath());
-        ob_clean();
-        header('Expires: Mon, 26 Jul 1990 05:00:00 GMT');
-        header('Last-Modified: ' . gmdate( "D, d M Y H:i:s" ) . 'GMT');
-        header('Cache-Control: no-cache, must-revalidate');
-        header('Pragma: no-cache');
-        header('Content-Length: '.strlen($json));
-        header('Content-Type: ' . 'text/json');
-        echo $json;
-        exit();
-    }
-
-
-    /** Get defined path to json status file.
-     *
-     * @return string   Path to json status file.
-     * @access protected
-     */
-    protected function getJsonPath(): string
-    {
-        return ExtensionManagementUtility::extPath('supportchat-switch') . 'Configuration/Status/state.json';
-    }
-
-    /**
-     * Save status as json file.
-     *
-     * @param bool $status
-     *
-     * @return bool
-     * @access protected
-     * @throws JsonException
-     */
-    protected function saveStatusToJson(bool $state): bool
-    {
-        try {
-            $switchStatusArray = ['state' => $state];
-            file_put_contents(
-                $this->getJsonPath(),
-                json_encode($switchStatusArray, JSON_THROW_ON_ERROR)
-            );
-        } catch (\JsonException $e) {
-            throw new Exception('Json has thrown an error: ' . $e->getMessage());
-            return false;
-        }
-        return true;
+        $responseData = StatusHelper::getCurrentStatus();
+        $response->getBody()->write($responseData);
+        return $response
+            ->withStatus(200)
+            ->withHeader('Content-Type', 'application/json');
     }
 }
