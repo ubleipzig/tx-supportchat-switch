@@ -25,6 +25,7 @@ declare(strict_types=1);
 namespace Ubl\SupportchatSwitch\Controller;
 
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Ubl\SupportchatSwitch\Helper\StatusHelper;
 
@@ -82,7 +83,7 @@ class SwitchController extends BaseAbstractController
      * @return ResponseInterface
      * @access public
      */
-    public function getCurrentChatStatus(ResponseInterface $response): ResponseInterface
+    public function getCurrentChatStatus(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $responseData = StatusHelper::getCurrentStatus();
         $response->getBody()->write($responseData);
